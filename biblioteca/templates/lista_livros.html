@@ -1,26 +1,29 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block title %}Catálogo de Livros{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Catálogo de Livros</h1>
-    <p><a><href="{% url 'adicionar_livro' %}">CADASTRAR UM NOVO LIVRO</a></p>
+{% block content %}
+    <h2>Catálogo de Livros</h2>
     {% if livros %}
-        <url>
+        <p>Estes são os livros cadastrados até o momento:</p>
+        <ul>
             {% for livro in livros %}
-                <li><strong>{{ livro.título }}</strong> - {{ livro.autor }} ({{ livro.genero }})</li>
+                <li>
+                    <strong>Livro:</strong> {{ livro.titulo }} | 
+                    <strong>Autor:</strong> {{ livro.autores }} | 
+                    <strong>Gênero:</strong> {{ livro.generos }} 
+                    <form action="{% url 'deletar_livro' livro.id %}" method="post" onsubmit="return confirm('Você tem certeza que deseja deletar este livro?');" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button">Deletar</button>
+                    </form>
+                </li>
             {% endfor %}
-        </url>
-    {%else %}
-        <p>Nenhum livro foi Cadastrado até o Momento. </p>
-
+        </ul>
+    {% else %}
+        <p>Ainda não há nenhum livro cadastrado.</p>
     {% endif %}
-    <br>
-    <p><a><href="{% url 'home' %}">Voltar para a página inicial</a></p>
-</body>
-</html>
+    <div class="links-container">
+        <p><a href="{% url 'home' %}">Cadastrar um novo livro</a></p>
+        <p><a href="{% url 'home' %}">Voltar para a tela inicial</a></p>
+    </div>
+{% endblock %}

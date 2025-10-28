@@ -5,7 +5,14 @@ from .models import Livro, Autor, Genero
 from .forms import LivroForm # Criaremos este formulário mais tarde
 
 def home(request):
-    return render(request, 'home.html')
+    if request.method == 'POST':
+        form = LivroForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_livros') # Redireciona para a lista após salvar
+    else:
+        form = LivroForm()
+    return render(request, 'home.html', {'form': form})
 
 def lista_livros(request):
     livros = Livro.objects.all()
