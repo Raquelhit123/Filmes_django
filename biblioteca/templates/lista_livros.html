@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Catálogo de Livros</h1>
+    <p><a><href="{% url 'adicionar_livro' %}">CADASTRAR UM NOVO LIVRO</a></p>
+    {% if livros %}
+        <url>
+            {% for livro in livros %}
+                <li><strong>{{ livro.título }}</strong> - {{ livro.autor }} ({{ livro.genero }})</li>
+            {% endfor %}
+        </url>
+    {%else %}
+        <p>Nenhum livro foi Cadastrado até o Momento. </p>
+
+    {% endif %}
+    <br>
+    <p><a><href="{% url 'home' %}">Voltar para a página inicial</a></p>
+</body>
+</html>
